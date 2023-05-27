@@ -12,3 +12,8 @@
     <li>Reflections with upto 4 bounces.</li>
     <li>Support for multiple lights in the same scene</li>
 </ul>
+<h2>References</h2>
+<ol>
+        <li>https://medium.com/swlh/ray-tracing-from-scratch-in-python-41670e6a96f9</li>
+        <li>https://en.wikipedia.org/wiki/Blinn–Phong_reflection_model</li>
+</ol>
