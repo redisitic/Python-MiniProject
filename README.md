@@ -1,7 +1,7 @@
 <h1>
         Python Ray Tracer
 </h1>
-<img width = "auto" src = "githubPageContent\render.png">
+<img width = "auto" src = "githubPageContent/render.png">
 <p>
     A simple python ray tracer that runs on the CPU.
 </p>
