@@ -39,17 +39,17 @@ for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
             normal_to_surface = f.normalise(intersection - nearest_object.center)
             shifted_point = intersection + 1e-5 * normal_to_surface
             illumination = np.zeros((3))
-            for light in lights:
-                intersection_to_light = f.normalise(light['position'] - shifted_point)
+            for light in get_lights():
+                intersection_to_light = f.normalise(light.position - shifted_point)
                 _, min_distance = f.nearest_intersected_object(objects, shifted_point, intersection_to_light)
-                intersection_to_light_distance = np.linalg.norm(light['position'] - intersection)
+                intersection_to_light_distance = np.linalg.norm(light.position - intersection)
                 is_shadowed = min_distance < intersection_to_light_distance
                 if is_shadowed:
                     continue
-                illumination += nearest_object.diffuse * light['diffuse'] * (1 - 0.63661977236759*np.arccos(np.dot(intersection_to_light, normal_to_surface)))
+                illumination += nearest_object.diffuse * light.diffuse * (1 - 0.63661977236759*np.arccos(np.dot(intersection_to_light, normal_to_surface)))
                 intersection_to_camera = f.normalise(camera - intersection)
                 H = f.normalise(intersection_to_light + intersection_to_camera)
-                illumination += nearest_object.specular * light['specular'] * np.dot(normal_to_surface, H) ** (nearest_object.shininess / 4)
+                illumination += nearest_object.specular * light.specular * np.dot(normal_to_surface, H) ** (nearest_object.shininess / 4)
             color += reflection * illumination
             reflection *= nearest_object.reflection * \
                 nearest_object.diffuse * illumination
