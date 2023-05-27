@@ -3,11 +3,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import functions as f
-from spheres import objects
-from lights import lights
+from spheres import get_objects, Sphere
+from lights import lights, get_lights
+
 
 # Global variables.
-
+objects = get_objects()
 max_depth = 4
 width = 150
 height = 100
@@ -30,11 +31,12 @@ for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
         color = np.zeros((3))
         reflection = 1
         for k in range(max_depth):
+            nearest_object : Sphere
             nearest_object, min_distance = f.nearest_intersected_object(objects, origin, direction)
             if nearest_object is None:
                 break
             intersection = origin + min_distance * direction
-            normal_to_surface = f.normalise(intersection - nearest_object['center'])
+            normal_to_surface = f.normalise(intersection - nearest_object.center)
             shifted_point = intersection + 1e-5 * normal_to_surface
             illumination = np.zeros((3))
             for light in lights:
@@ -44,13 +46,13 @@ for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
                 is_shadowed = min_distance < intersection_to_light_distance
                 if is_shadowed:
                     continue
-                illumination += nearest_object['diffuse'] * light['diffuse'] * (1 - 0.63661977236759*np.arccos(np.dot(intersection_to_light, normal_to_surface)))
+                illumination += nearest_object.diffuse * light['diffuse'] * (1 - 0.63661977236759*np.arccos(np.dot(intersection_to_light, normal_to_surface)))
                 intersection_to_camera = f.normalise(camera - intersection)
                 H = f.normalise(intersection_to_light + intersection_to_camera)
-                illumination += nearest_object['specular'] * light['specular'] * np.dot(normal_to_surface, H) ** (nearest_object['shininess'] / 4)
+                illumination += nearest_object.specular * light['specular'] * np.dot(normal_to_surface, H) ** (nearest_object.shininess / 4)
             color += reflection * illumination
-            reflection *= nearest_object['reflection'] * \
-                nearest_object['diffuse']*illumination
+            reflection *= nearest_object.reflection * \
+                nearest_object.diffuse * illumination
             origin = shifted_point
             direction = f.reflected(direction, normal_to_surface)
         color = color * exposure + ((gamma*-1)+2.2)

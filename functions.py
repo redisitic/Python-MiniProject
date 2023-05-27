@@ -2,11 +2,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+from spheres import Sphere, get_objects
 
+objects = get_objects()
 def normalise(vector):
     return vector / np.linalg.norm(vector)
 
-# Calculates the sign disatance function of a sphere for ray intersection.
+# Calculates where the ray hits on the sphere
 
 
 def sphere_intersect(center, radius, ray_origin, ray_direction):
@@ -24,8 +26,7 @@ def sphere_intersect(center, radius, ray_origin, ray_direction):
 
 
 def nearest_intersected_object(objects, ray_origin, ray_direction):
-    distances = [sphere_intersect(
-        obj['center'], obj['radius'], ray_origin, ray_direction) for obj in objects]
+    distances = [sphere_intersect(obj.center, obj.radius, ray_origin, ray_direction) for obj in objects]
     nearest_object = None
     min_distance = np.inf
     for index, distance in enumerate(distances):
@@ -42,6 +43,6 @@ def reflected(vector, axis):
 
 def path_finder(path):
     if os.name == "nt":
-        return path.replace("/", "\\")
+        return path.replace("/", "\\") #for windows
     else:
-        return path.replace("\\", "/")
+        return path.replace("\\", "/") #for linux
