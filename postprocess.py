@@ -1,14 +1,8 @@
 import cv2
 import os
+from functions import path_finder
 # Using OpenCV to anti-alias the render from raytracing.py.
 # I should implement samples in the main loop instead.
-
-
-def path_finder(path):
-    if os.name == "nt":
-        return path.replace("/", "\\")
-    else:
-        return path.replace("\\", "/")
 
 # Path to the original render.
 render = os.path.dirname(os.path.abspath(
