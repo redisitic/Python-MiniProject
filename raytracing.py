@@ -9,8 +9,8 @@ from lights import lights
 # Global variables.
 
 max_depth = 4
-width = 800
-height = 600
+width = 150
+height = 100
 exposure = 1
 gamma = 2.2
 
@@ -34,13 +34,11 @@ for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
             if nearest_object is None:
                 break
             intersection = origin + min_distance * direction
-            normal_to_surface = f.normalise(
-                intersection - nearest_object['center'])
+            normal_to_surface = f.normalise(intersection - nearest_object['center'])
             shifted_point = intersection + 1e-5 * normal_to_surface
             illumination = np.zeros((3))
             for light in lights:
-                intersection_to_light = f.normalise(
-                    light['position'] - shifted_point)
+                intersection_to_light = f.normalise(light['position'] - shifted_point)
                 _, min_distance = f.nearest_intersected_object(objects, shifted_point, intersection_to_light)
                 intersection_to_light_distance = np.linalg.norm(light['position'] - intersection)
                 is_shadowed = min_distance < intersection_to_light_distance
