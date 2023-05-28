@@ -4,12 +4,12 @@ import matplotlib.pyplot as plt
 import os
 import functions as f
 from spheres import get_objects, Sphere
-from lights import lights, get_lights
+from lights import Light, get_lights
 
 objects = get_objects()
 max_depth = 4
-width = 150
-height = 100
+width = 800
+height = 600
 exposure = 1
 gamma = 2.2
 
@@ -34,27 +34,28 @@ for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
             normal_to_surface = f.normalise(intersection - nearest_object.center)
             shifted_point = intersection + 1e-5 * normal_to_surface
             illumination = np.zeros((3))
+            shadowed_illumination = np.zeros((3))
             for light in get_lights():
                 intersection_to_light = f.normalise(light.position - shifted_point)
                 _, min_distance = f.nearest_intersected_object(objects, shifted_point, intersection_to_light)
                 intersection_to_light_distance = np.linalg.norm(light.position - intersection)
                 is_shadowed = min_distance < intersection_to_light_distance
                 if is_shadowed:
-                    continue
-                illumination += nearest_object.diffuse * light.diffuse * (1 - 0.63661977236759*np.arccos(np.dot(intersection_to_light, normal_to_surface)))
+                    reflection *= nearest_object.diffuse * 0.25 * nearest_object.reflection * light.diffuse * (np.dot(intersection_to_light, normal_to_surface)) / intersection_to_light_distance ** 2
+                    shadowed_illumination += reflection
+                illumination += nearest_object.diffuse * light.diffuse * (1 - 0.63661977236759*np.arccos(np.dot(intersection_to_light, normal_to_surface))) / intersection_to_light_distance ** 2
                 intersection_to_camera = f.normalise(camera - intersection)
                 H = f.normalise(intersection_to_light + intersection_to_camera)
                 illumination += nearest_object.specular * light.specular * np.dot(normal_to_surface, H) ** (nearest_object.shininess / 4)
-            color += reflection * illumination
-            reflection *= nearest_object.reflection * \
-                nearest_object.diffuse * illumination
+            color += (reflection * illumination) + (shadowed_illumination)
+            reflection *= nearest_object.reflection * nearest_object.diffuse * illumination
             origin = shifted_point
             direction = f.reflected(direction, normal_to_surface)
         color = color * exposure + ((gamma*-1)+2.2)
+        color = color**0.6
         image[i, j] = np.clip(color, 0, 1)
     print(" %d / %d " % (i + 1, height))
 
-render = os.path.dirname(os.path.abspath(
-    __file__)) + "/imgs/render.png"
+render = os.path.dirname(os.path.abspath(__file__)) + "/imgs/render.png"
 render = f.path_finder(render)
 plt.imsave(render, image)
