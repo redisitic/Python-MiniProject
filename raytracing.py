@@ -6,8 +6,6 @@ import functions as f
 from spheres import get_objects, Sphere
 from lights import lights, get_lights
 
-
-# Global variables.
 objects = get_objects()
 max_depth = 4
 width = 150
@@ -15,13 +13,10 @@ height = 100
 exposure = 1
 gamma = 2.2
 
-# Defining camera and screen.
-
 camera = np.array([0, 0, 1])
 ratio = float(width/height)
-screen = (-1, 1/ratio, 1, -1/ratio)  # Screen perfectly fits the camera.
+screen = (-1, 1/ratio, 1, -1/ratio)
 
-# Main RayTracing loop.
 image = np.zeros((height, width, 3))
 for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
     for j, x in enumerate(np.linspace(screen[0], screen[2], width)):
@@ -59,10 +54,7 @@ for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
         image[i, j] = np.clip(color, 0, 1)
     print(" %d / %d " % (i + 1, height))
 
-# Path to the original render.
 render = os.path.dirname(os.path.abspath(
     __file__)) + "/imgs/render.png"
-# Making sure the path is correct for the OS.
 render = f.path_finder(render)
-
-plt.imsave(render, image)  # Saves the final render.
+plt.imsave(render, image)

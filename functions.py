@@ -8,9 +8,6 @@ objects = get_objects()
 def normalise(vector):
     return vector / np.linalg.norm(vector)
 
-# Calculates where the ray hits on the sphere
-
-
 def sphere_intersect(center, radius, ray_origin, ray_direction):
     b = 2 * np.dot(ray_direction, ray_origin - center)
     c = np.linalg.norm(ray_origin - center) ** 2 - radius ** 2
@@ -22,9 +19,6 @@ def sphere_intersect(center, radius, ray_origin, ray_direction):
             return min(t1, t2)
     return None
 
-# Goes through all the spheres in the scene to find the nearest one to the ray.
-
-
 def nearest_intersected_object(objects, ray_origin, ray_direction):
     distances = [sphere_intersect(obj.center, obj.radius, ray_origin, ray_direction) for obj in objects]
     nearest_object = None
@@ -34,9 +28,6 @@ def nearest_intersected_object(objects, ray_origin, ray_direction):
             min_distance = distance
             nearest_object = objects[index]
     return nearest_object, min_distance
-
-# Reflects the ray based on the normal of the sphere.
-
 
 def reflected(vector, axis):
     return vector - 2 * np.dot(vector, axis) * axis
