@@ -8,8 +8,8 @@ from lights import Light, get_lights
 
 objects = get_objects()
 max_depth = 4
-width = 800
-height = 600
+width = 160
+height = 120
 exposure = 1
 gamma = 2.2
 
@@ -54,7 +54,7 @@ for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
         color = color * exposure + ((gamma*-1)+2.2)
         color = color**0.6
         image[i, j] = np.clip(color, 0, 1)
-    print(" %d / %d " % (i + 1, height))
+    print(" %d / %d , %d" % (i + 1, height, (i+1)/height*100),"%")
 
 render = os.path.dirname(os.path.abspath(__file__)) + "/imgs/render.png"
 render = f.path_finder(render)
