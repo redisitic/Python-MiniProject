@@ -62,3 +62,4 @@ for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
 render = os.path.dirname(os.path.abspath(__file__)) + "/imgs/render.png"
 render = f.path_finder(render)
 plt.imsave(render, image)
+# 
