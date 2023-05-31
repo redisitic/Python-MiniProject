@@ -11,7 +11,7 @@
     <li>Pixel Perfect Shadows.</li>
     <li>Reflections with upto 4 bounces.</li>
     <li>Support for multiple lights in the same scene</li>
-    <li>Lights follow inverse square law</li>
+    <li>Lights follows physcial laws</li>
     <li>HDR Tonemapping</li>
     <li>Metallic Materials</li>
 </ul>

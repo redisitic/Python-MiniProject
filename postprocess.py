@@ -22,4 +22,3 @@ elif n.lower() == 'd':
     cv2.imwrite(filename, image)
 else:
     print("Invalid Choice. Using no Post process.")
-    #

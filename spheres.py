@@ -19,4 +19,3 @@ def get_objects():
     sphere7 = Sphere([0,0,9002], 8999, [0.8,0.8,0.05], [0.2, 0.2, 0.2], 100, 0.7)
     sphere8 = Sphere([0.5, -0.5, -1], .5, [0.05, 0.75, 0.9], [0.2, 0.2, 0.2], 100, 1)
     return [sphere1, sphere2, sphere3, sphere4, sphere5, sphere6, sphere7, sphere8]
-# 

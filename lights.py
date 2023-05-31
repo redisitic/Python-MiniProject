@@ -16,5 +16,3 @@ def check_lights():
         for sphere in get_objects:
             if np.any(light.position == sphere.center):
                 raise ValueError("Light is inside a sphere")
-            # 
-    
