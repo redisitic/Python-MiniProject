@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-from spheres import Sphere, get_objects
+from spheres import get_objects
 
 objects = get_objects()
 def normalise(vector):

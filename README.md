@@ -13,6 +13,7 @@
     <li>Support for multiple lights in the same scene</li>
     <li>Lights follow inverse square law</li>
     <li>HDR Tonemapping</li>
+    <li>Metallic Materials</li>
 </ul>
 <h2>References</h2>
 <ol>

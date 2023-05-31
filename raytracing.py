@@ -2,14 +2,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-import functions as f
 from spheres import get_objects, Sphere
-from lights import Light, get_lights
+from lights import get_lights, check_lights
+import functions as f
 
 objects = get_objects()
 max_depth = 4
-width = 800
-height = 600
+width = 400
+height = 300
 exposure = 1
 gamma = 2.2
 hdr = True
@@ -54,10 +54,8 @@ for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
             direction = f.reflected(direction, normal_to_surface)
 
         color = color * exposure + ((gamma*-1)+2.2)
-        if hdr == True:
+        if hdr:
             color = color**0.6
-        else:
-            color = color
         image[i, j] = np.clip(color, 0, 1)
     print(" %d / %d , %d" % (i + 1, height, (i+1)/height*100),"%")
 
