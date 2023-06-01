@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 from spheres import get_objects, Sphere
-from lights import get_lights, check_lights
+from lights import get_lights
 import functions as f
 
 objects = get_objects()
@@ -46,8 +46,7 @@ for i, y in enumerate(np.linspace(screen[1], screen[3], height)):
                     shadowed_illumination += reflection
                 illumination += nearest_object.diffuse * light.diffuse * (1 - 0.63661977236759*np.arccos(np.dot(intersection_to_light, normal_to_surface))) / intersection_to_light_distance ** 2
                 intersection_to_camera = f.normalise(camera - intersection)
-                H = f.normalise(intersection_to_light + intersection_to_camera)
-                illumination += nearest_object.specular * light.specular * np.dot(normal_to_surface, H) ** (nearest_object.shininess / 4)
+                illumination += nearest_object.specular * light.specular * np.dot(normal_to_surface, f.normalise(intersection_to_light + intersection_to_camera)) ** (nearest_object.shininess / 4)
             color += (reflection * illumination) + (shadowed_illumination)
             reflection *= nearest_object.reflection * nearest_object.diffuse * illumination
             origin = shifted_point
