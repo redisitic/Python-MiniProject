@@ -1,5 +1,5 @@
 import numpy as np
-from spheres import Sphere, get_objects
+from spheres import get_objects
 
 class Light:
     def __init__(self, position, diffuse, specular, intensity):
@@ -12,7 +12,7 @@ def get_lights():
     return [light1]
 
 def check_lights():
-    for light in get_lights:
-        for sphere in get_objects:
+    for light in get_lights():
+        for sphere in get_objects():
             if np.any(light.position == sphere.center):
                 raise ValueError("Light is inside a sphere")

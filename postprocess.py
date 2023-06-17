@@ -1,12 +1,10 @@
 import cv2
-import os
-from functions import path_finder
 
-render = os.path.dirname(os.path.abspath(__file__)) + "/imgs/render.png"
-render = path_finder(render)
-filename = os.path.dirname(os.path.abspath(
-    __file__)) + "/imgs/render_post.png"
-filename = path_finder(filename)
+import os
+
+
+render = os.path.join("imgs", "render.png")
+filename = os.path.join("imgs", "render_post.png")
 
 n = input("Do you want a blur effect with higher resoultion or downsampling? (b / d)")
 
