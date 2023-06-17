@@ -1,6 +1,6 @@
 # Python Ray Tracer
 
-![example render](githubPageContent/render.png)
+![example render](assets/readme/render.png)
 
 A simple python ray tracer that runs on the CPU.
 
