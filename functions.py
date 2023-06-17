@@ -1,12 +1,14 @@
-# Importing the libraries.
 import numpy as np
 import matplotlib.pyplot as plt
 import os
 from spheres import get_objects
 
 objects = get_objects()
+
+
 def normalise(vector):
     return vector / np.linalg.norm(vector)
+
 
 def sphere_intersect(center, radius, ray_origin, ray_direction):
     b = 2 * np.dot(ray_direction, ray_origin - center)
@@ -19,6 +21,7 @@ def sphere_intersect(center, radius, ray_origin, ray_direction):
             return min(t1, t2)
     return None
 
+
 def nearest_intersected_object(objects, ray_origin, ray_direction):
     distances = [sphere_intersect(obj.center, obj.radius, ray_origin, ray_direction) for obj in objects]
     nearest_object = None
@@ -29,11 +32,6 @@ def nearest_intersected_object(objects, ray_origin, ray_direction):
             nearest_object = objects[index]
     return nearest_object, min_distance
 
+
 def reflected(vector, axis):
     return vector - 2 * np.dot(vector, axis) * axis
-
-def path_finder(path):
-    if os.name == "nt":
-        return path.replace("/", "\\") #for windows
-    else:
-        return path.replace("\\", "/") #for linux
