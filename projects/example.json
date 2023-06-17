@@ -5,8 +5,8 @@
   },
   "settings": {
     "resolution": {
-      "height": 400,
-      "width": 300
+      "width": 100,
+      "height": 75
     },
     "rendering": {
       "max_depth": 4,
