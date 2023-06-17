@@ -34,7 +34,7 @@ def _reflected(vector, axis):
     return vector - 2 * np.dot(vector, axis) * axis
 
 
-def render(scene: Scene):
+def render(scene: Scene, quite: bool = False):
     ratio = scene.res[0] / scene.res[1]
     screen = (-1, 1/ratio, 1, -1/ratio)
 
@@ -77,6 +77,10 @@ def render(scene: Scene):
                 color = color**0.6
             image[i, j] = np.clip(color, 0, 1)
 
-        print(f"{i+1} / {scene.res[1]}, {(i+1)/scene.res[1]:.2%}")
+        if not quite:
+            print(f"{j+1} / {scene.res[1]}, {(j+1)/scene.res[1]:.2%}", end="\r")
+
+    if not quite:
+        print("\n")
 
     return image

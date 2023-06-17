@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 from matplotlib import pyplot as plt
 
@@ -12,7 +13,7 @@ class Project:
                  res: tuple[int, int],
                  max_depth: int, hdr: bool, exposure: float, gamma: float,
                  lights: tuple[Light] | list[Light], spheres: tuple[Sphere] | list[Sphere],
-                 camera: Camera):
+                 camera: Camera, quite: bool):
         # assigning metadata
         self.name = name
         self.desc = desc
@@ -24,15 +25,23 @@ class Project:
         for sphere in spheres:
             self._scene.add_sphere(sphere)
 
+        self.quite = quite
+
     def render(self, export_path: str):
         os.makedirs(export_path[:export_path.rfind(os.path.sep)],
                     exist_ok=True)
 
-        image = engine.render(self._scene)
+        time_point_1 = time.perf_counter()
+        image = engine.render(self._scene, self.quite)
+        time_point_2 = time.perf_counter()
+
+        if not self.quite:
+            print(f"Rendering took {time_point_2 - time_point_1} seconds")
+
         plt.imsave(export_path, image)
 
     @staticmethod
-    def load(path: str):
+    def load(path: str, quite: bool):
         with open(path) as f:
             project = json.load(f)
 
@@ -50,5 +59,5 @@ class Project:
             (project['settings']['resolution']['width'], project['settings']['resolution']['height']),
             project['settings']['rendering']['max_depth'], project['settings']['rendering']['hdr'],
             project['settings']['rendering']['exposure'], project['settings']['rendering']['gamma'],
-            lights, spheres, camera
+            lights, spheres, camera, quite
         )
