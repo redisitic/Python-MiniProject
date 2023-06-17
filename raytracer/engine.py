@@ -78,7 +78,7 @@ def render(scene: Scene, quite: bool = False):
             image[i, j] = np.clip(color, 0, 1)
 
         if not quite:
-            print(f"{j+1} / {scene.res[1]}, {(j+1)/scene.res[1]:.2%}", end="\r")
+            print(f"{i+1} / {scene.res[1]}, {(i+1)/scene.res[1]:.2%}", end="\r")
 
     if not quite:
         print("\n")
