@@ -72,7 +72,7 @@ def render(scene: Scene):
                 origin = shifted_point
                 direction = _reflected(direction, normal_to_surface)
 
-            color = color * scene.exposure + ((scene.gamma*-1)+2.2)
+            color = color * scene.exposure - scene.gamma + 2.2
             if scene.hdr:
                 color = color**0.6
             image[i, j] = np.clip(color, 0, 1)
