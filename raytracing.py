@@ -8,11 +8,11 @@ import functions as f
 
 objects = get_objects()
 max_depth = 4
-width = 400
-height = 300
+width = 150
+height = 100
 exposure = 1
-gamma = 2.2
-hdr = True
+gamma = 2.6
+hdr = False
 
 camera = np.array([0, 0, 1])
 ratio = float(width/height)
